@@ -1,0 +1,17 @@
+%h1= @task.name
+%p
+  Strong Description:
+  = @task.description
+
+- if @task.due_date.present?
+  %p
+    Strong Due Date:
+    = l @task.due_date
+
+%p
+  Strong Status:
+  = @task.status
+
+= link_to 'Edit', edit_task_path(@task)
+|
+= link_to 'Back', tasks_path
