@@ -1,17 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyText
-  due_date: 2024-06-19
-  status: MyString
+  name: Task1
+  description: Task 1 description
+  due_date: 2025-06-21
+  status: Draft
   user: one
   user_type: User
 
 two:
-  name: MyString
-  description: MyText
-  due_date: 2024-06-19
-  status: MyString
+  name: Task2
+  description: Task 2 description
+  due_date: 2024-06-21
+  status: Completed
   user: two
   user_type: User

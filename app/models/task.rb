@@ -5,6 +5,10 @@ class Task < ApplicationRecord
 
   validate :must_have_user_if_required
 
+  scope :with_status, ->(status) { where(status: status) if status.present? }
+  scope :order_by_status, -> { order(:status) }
+  scope :order_by_due_date, -> { order(:due_date) }
+
   private
 
   def must_have_user_if_required

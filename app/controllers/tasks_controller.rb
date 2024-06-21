@@ -4,6 +4,9 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
+    @tasks = @tasks.with_status(params[:status]) if params[:status].present?
+    @tasks = @tasks.order_by_due_date if params[:sort] == 'due_date'
+    @tasks = @tasks.sort_by { |task| Task.statuses.keys.index(task.status) } if params[:sort] == 'status'
   end
 
   def new
