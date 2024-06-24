@@ -135,5 +135,4 @@ class TasksTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select 'tbody tr:first-child td', text: @task1.name
   end
-
 end

@@ -7,10 +7,15 @@ class Task < ApplicationRecord
   enum status: { draft: "Draft", open: "Open", pending: "Pending", in_progress: "In Progress", completed: "Completed" }
 
   validate :must_have_assigned_user_if_required
+  validate :due_date_cannot_be_in_the_past, on: [:create, :edit, :update]
 
   scope :with_status, ->(status) { where(status: status) if status.present? }
   scope :order_by_status, -> { order(:status) }
   scope :order_by_due_date, -> { order(:due_date) }
+
+  def overdue?
+    due_date.present? && due_date < Date.today && !completed?
+  end
 
   private
 
@@ -20,4 +25,9 @@ class Task < ApplicationRecord
     end
   end
 
+  def due_date_cannot_be_in_the_past
+    if due_date.present? && due_date < Date.today
+      errors.add(:due_date, "can't be in the past")
+    end
+  end
 end

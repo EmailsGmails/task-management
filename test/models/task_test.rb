@@ -32,4 +32,46 @@ class TaskTest < ActiveSupport::TestCase
     @task.assigned_to = nil
     assert_not @task.valid?
   end
+
+  test "task should not be overdue if due date is in the future" do
+    task = Task.create!(
+      name: "Future Task",
+      description: "This task is in the future",
+      due_date: Date.tomorrow,
+      status: "open",
+      assigned_to: @user,
+      assigned_by: @user,
+      created_by: @user
+    )
+    assert_not task.overdue?
+  end
+
+  test "task should not allow due date in the past on creation" do
+    task = Task.new(
+      name: "Invalid Task",
+      description: "This task has an invalid due date",
+      due_date: Date.yesterday,
+      status: "open",
+      assigned_to: @user,
+      assigned_by: @user,
+      created_by: @user
+    )
+    assert_not task.valid?
+    assert_includes task.errors[:due_date], "can't be in the past"
+  end
+
+  test "task should not allow due date in the past on update" do
+    task = Task.create!(
+      name: "Valid Task",
+      description: "This task has a valid due date",
+      due_date: Date.tomorrow,
+      status: "open",
+      assigned_to: @user,
+      assigned_by: @user,
+      created_by: @user
+    )
+    task.due_date = Date.yesterday
+    assert_not task.valid?
+    assert_includes task.errors[:due_date], "can't be in the past"
+  end
 end
