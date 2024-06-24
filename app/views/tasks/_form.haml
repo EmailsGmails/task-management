@@ -23,8 +23,8 @@
     = f.select :status, options_for_select(Task.statuses.values, @task.status)
 
   .field
-    = f.label :user_id
-    = f.collection_select :user_id, User.all, :id, :email, prompt: "Select a user"
+    = f.label :assigned_to, "Assigned to"
+    = f.collection_select :assigned_to_id, User.all, :id, :email, prompt: true
 
   .actions
     = f.submit submit_text

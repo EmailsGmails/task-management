@@ -1,9 +1,8 @@
 class TasksController < ApplicationController
-  skip_before_action :authenticate_user!
-  before_action :set_task, only: [:show, :edit, :update, :destroy, :complete]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = policy_scope(Task)
     @tasks = @tasks.with_status(params[:status]) if params[:status].present?
     @tasks = @tasks.order_by_due_date if params[:sort] == 'due_date'
     @tasks = @tasks.sort_by { |task| Task.statuses.keys.index(task.status) } if params[:sort] == 'status'
@@ -11,11 +10,14 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    authorize @task
     @users = User.all
   end
 
   def create
     @task = Task.new(task_params)
+    @task.created_by = current_user
+    @task.assigned_by = current_user
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
     else
@@ -24,15 +26,13 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task.assigned_by = current_user
   end
 
   def update
-    @task = Task.find(params[:id])
     if @task.update(task_params)
       redirect_to @task, notice: 'Task was successfully updated.'
     else
@@ -45,18 +45,14 @@ class TasksController < ApplicationController
     redirect_to tasks_url, notice: 'Task was successfully destroyed.'
   end
 
-  def complete
-    @task.update(status: 'completed')
-    redirect_to @task, notice: 'Task marked as completed.'
-  end
-
   private
 
   def set_task
     @task = Task.find(params[:id])
+    authorize @task
   end
 
   def task_params
-    params.require(:task).permit(:name, :description, :due_date, :status, :user_id)
+    params.require(:task).permit(:name, :description, :due_date, :status, :assigned_to_id, :assigned_by_id, :created_by_id)
   end
 end

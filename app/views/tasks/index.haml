@@ -17,6 +17,9 @@
       %th Description
       %th Due Date
       %th Status
+      %th Assigned To
+      %th Assigned By
+      %th Created By
       %th Action
   %tbody
     - @tasks.each do |task|
@@ -25,6 +28,9 @@
         %td= task.description
         %td= task.due_date ? l(task.due_date) : "No due date"
         %td= task.status
+        %td= task.assigned_to&.email
+        %td= task.assigned_by&.email
+        %td= task.created_by&.email
         %td
           = link_to 'Show', task_path(task)
           |

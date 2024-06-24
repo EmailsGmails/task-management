@@ -10,3 +10,10 @@ one:
   reset_password_token: "token_value_here"
   reset_password_sent_at: <%= Time.now.utc - 10.minutes %>
   remember_created_at: <%= Time.now.utc - 20.minutes %>
+
+two:
+  email: user_two@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password2') %>
+  reset_password_token: "different_token_value_here"
+  reset_password_sent_at: <%= Time.now.utc - 10.minutes %>
+  remember_created_at: <%= Time.now.utc - 20.minutes %>

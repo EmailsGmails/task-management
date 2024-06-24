@@ -45,6 +45,8 @@ gem 'dotenv-rails'
 
 gem "devise", "~> 4.9"
 
+gem "pundit", "~> 2.3"
+
 gem "haml-rails", "~> 2.1"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
@@ -71,4 +73,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem 'database_cleaner'
+  gem "rails-controller-testing", "~> 1.0"
 end

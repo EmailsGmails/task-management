@@ -8,11 +8,11 @@ services:
                       bundle exec rails s -b '${HOST}' -p ${PORT}"
     volumes:
       - .:/rails
-      - bundle_cache:/usr/local/bundle
     ports:
       - "3000:3000"
     depends_on:
       - db
+    tty: true
 
   db:
     image: postgres:13-alpine
@@ -25,4 +25,3 @@ services:
 
 volumes:
   postgres_data:
-  bundle_cache:

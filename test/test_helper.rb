@@ -2,7 +2,9 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 require 'database_cleaner'
+require 'rails-controller-testing'
 
+Rails::Controller::Testing.install
 DatabaseCleaner.strategy = :transaction
 
 module ActiveSupport

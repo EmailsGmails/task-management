@@ -5,7 +5,9 @@ one:
   description: Task 1 description
   due_date: 2025-06-21
   status: Draft
-  user: one
+  assigned_to_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  assigned_by_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  created_by_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
   user_type: User
 
 two:
@@ -13,5 +15,7 @@ two:
   description: Task 2 description
   due_date: 2024-06-21
   status: Completed
-  user: two
+  assigned_to_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
+  assigned_by_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  created_by_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
   user_type: User
