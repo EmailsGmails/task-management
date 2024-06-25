@@ -1,30 +1,30 @@
-= form_for @task do |f|
-  - if @task.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@task.errors.count, "error")} prohibited this task from being saved:"
+= form_with(model: task, local: true) do |form|
+  - if task.errors.any?
+    #error_explanation.alert.alert-danger
+      %h4= pluralize(task.errors.count, "error") + " prohibited this task from being saved:"
       %ul
-        - @task.errors.full_messages.each do |msg|
-          %li= msg
+        - task.errors.full_messages.each do |message|
+          %li= message
 
-  .field
-    = f.label :name
-    = f.text_field :name
+  .form-group
+    = form.label :title
+    = form.text_field :title, class: "form-control"
 
-  .field
-    = f.label :description
-    = f.text_area :description
+  .form-group
+    = form.label :description
+    = form.text_area :description, class: "form-control"
 
-  .field
-    = f.label :due_date
-    = f.date_field :due_date
+  .form-group
+    = form.label :due_date
+    = form.date_field :due_date, class: "form-control"
 
-  .field
-    = f.label :status
-    = f.select :status, options_for_select(Task.statuses.values, @task.status)
+  .form-group
+    = form.label :status
+    = form.select :status, options_for_select(Task.statuses.keys.map { |status| [status.humanize, status] }, task.status), {}, class: "form-control"
 
-  .field
-    = f.label :assigned_to, "Assigned to"
-    = f.collection_select :assigned_to_id, User.all, :id, :email, prompt: true
+  .form-group
+    = form.label :assigned_to, "Assigned to"
+    = form.collection_select :assigned_to_id, User.all, :id, :email, { prompt: true }, class: "form-control"
 
-  .actions
-    = f.submit submit_text
+  = form.submit class: "btn btn-primary"
+  = link_to 'Back', tasks_path, class: "btn btn-secondary"

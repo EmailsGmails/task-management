@@ -1,17 +1,27 @@
-%h1= @task.name
-%p
-  Strong Description:
-  = @task.description
+%h1 Task: #{@task.title}
 
-- if @task.due_date.present?
-  %p
-    Strong Due Date:
-    = l @task.due_date
+%table.table.table-bordered
+  %tr
+    %th Title
+    %td= @task.title
+  %tr
+    %th Description
+    %td= @task.description
+  %tr
+    %th Due Date
+    %td= @task.due_date
+  %tr
+    %th Status
+    %td= @task.status.humanize
+  %tr
+    %th Assigned To
+    %td= @task.assigned_to ? @task.assigned_to.email : "Unassigned"
+  %tr
+    %th Assigned By
+    %td= @task.assigned_by ? @task.assigned_by.email : "N/A"
+  %tr
+    %th Created By
+    %td= @task.created_by ? @task.created_by.email : "N/A"
 
-%p
-  Strong Status:
-  = @task.status
-
-= link_to 'Edit', edit_task_path(@task)
-|
-= link_to 'Back', tasks_path
+= link_to 'Edit', edit_task_path(@task), class: "btn btn-warning"
+= link_to 'Back', tasks_path, class: "btn btn-secondary"
