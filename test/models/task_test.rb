@@ -7,7 +7,7 @@ class TaskTest < ActiveSupport::TestCase
       title: "Test Task",
       description: "Test Description",
       due_date: "2025-06-21",
-      status: "Draft",
+      status: :draft,
       assigned_to: @user,
       created_by: @user
     )

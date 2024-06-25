@@ -43,6 +43,6 @@ class TaskPolicy < ApplicationPolicy
   private
 
   def user_is_owner_or_assigner_or_creator?
-    record.assigned_to.id == user.id || record.assigned_by.id == user.id || record.created_by.id == user.id
+    record.assigned_to&.id == user.id || record.assigned_by&.id == user.id || record.created_by.id == user.id
   end
 end

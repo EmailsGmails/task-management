@@ -3,9 +3,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = policy_scope(Task)
-    @tasks = @tasks.with_status(params[:status]) if params[:status].present?
-    @tasks = @tasks.order_by_due_date if params[:sort] == 'due_date'
-    @tasks = @tasks.sort_by { |task| Task.statuses.keys.index(task.status) } if params[:sort] == 'status'
+    @tasks = TaskQuery.new(query_params, Task.all, current_user).call.paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -55,4 +53,9 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:title, :description, :due_date, :status, :assigned_to_id, :assigned_by_id, :created_by_id)
   end
+
+  def query_params
+    params.permit(:status, :sort, :order)
+  end
+
 end

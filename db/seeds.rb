@@ -36,7 +36,7 @@ Task.create!(
   title: "Task 1",
   description: "Description for task 1",
   due_date: Date.today + 5,
-  status: "Draft",
+  status: Task.statuses[:draft],
   assigned_to: user2,
   assigned_by: user1,
   created_by: user1
@@ -46,7 +46,7 @@ Task.create!(
   title: "Task 2",
   description: "Description for task 2",
   due_date: Date.today + 10,
-  status: "Open",
+  status: Task.statuses[:open],
   assigned_to: user3,
   assigned_by: user1,
   created_by: user1
@@ -56,7 +56,7 @@ Task.create!(
   title: "Task 3",
   description: "Description for task 3",
   due_date: Date.today + 15,
-  status: "Pending",
+  status: Task.statuses[:pending],
   assigned_to: user1,
   assigned_by: user2,
   created_by: user2
@@ -66,7 +66,7 @@ Task.create!(
   title: "Task 4",
   description: "Description for task 4",
   due_date: Date.today + 20,
-  status: "In Progress",
+  status: Task.statuses[:in_progress],
   assigned_to: user1,
   assigned_by: user3,
   created_by: user3
@@ -76,7 +76,7 @@ Task.create!(
   title: "Task 5",
   description: "Description for task 5",
   due_date: Date.today + 25,
-  status: "Completed",
+  status: Task.statuses[:completed],
   assigned_to: user2,
   assigned_by: user3,
   created_by: user3

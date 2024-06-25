@@ -4,7 +4,7 @@ one:
   title: Task1
   description: Task 1 description
   due_date: 2025-06-21
-  status: Draft
+  status: 0
   assigned_to_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
   assigned_by_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
   created_by_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
@@ -14,7 +14,7 @@ two:
   title: Task2
   description: Task 2 description
   due_date: 2024-06-21
-  status: Completed
+  status: 4
   assigned_to_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
   assigned_by_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
   created_by_id: <%= ActiveRecord::FixtureSet.identify(:one) %>

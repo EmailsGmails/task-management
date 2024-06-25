@@ -33,7 +33,7 @@ class TasksTest < ActionDispatch::IntegrationTest
         title: "New Task",
         description: "Task description",
         due_date: "2025-06-21",
-        status: "draft",
+        status: :draft,
         assigned_to_id: @user.id,
         assigned_by_id: @user.id,
         created_by_id: @user.id
@@ -78,7 +78,7 @@ class TasksTest < ActionDispatch::IntegrationTest
         title: @task1.title,
         description: @task1.description,
         due_date: "2025-06-21",
-        status: "Draft",
+        status: :draft,
       } }
     end
 
@@ -111,19 +111,25 @@ class TasksTest < ActionDispatch::IntegrationTest
   end
 
   test "should filter tasks by status" do
-    get tasks_url, params: { status: 'Draft' }
+    get tasks_url, params: { status: :draft }
     assert_response :success
     assert_select 'tbody tr', count: 1
   end
 
-  test "should sort tasks by due date" do
-    get tasks_url, params: { sort: 'due_date' }
+  test "should sort tasks by due date in descending order" do
+    get tasks_url, params: { sort: 'due_date', order: 'asc' }
     assert_response :success
     assert_select 'tbody tr:first-child td', text: @task2.title
   end
 
+  test "should sort tasks by due date in ascending order" do
+    get tasks_url, params: { sort: 'due_date', order: 'desc' }
+    assert_response :success
+    assert_select 'tbody tr:first-child td', text: @task1.title
+  end
+
   test "should sort tasks by status" do
-    get tasks_url, params: { sort: 'status' }
+    get tasks_url, params: { sort: 'status', order: 'asc' }
     assert_response :success
     assert_select 'tbody tr:first-child td', text: @task1.title
   end
