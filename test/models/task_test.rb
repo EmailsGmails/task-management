@@ -3,16 +3,53 @@ require "test_helper"
 class TaskTest < ActiveSupport::TestCase
   def setup
     @user = users(:one)
-    @task = Task.new(name: "Test Task", assigned_to: @user, created_by: @user)
+    @task = Task.new(
+      title: "Test Task",
+      description: "Test Description",
+      due_date: "2025-06-21",
+      status: "Draft",
+      assigned_to: @user,
+      created_by: @user
+    )
   end
 
   test "should be valid" do
     assert @task.valid?
   end
 
-  test "name should be present" do
-    @task.name = ""
+  test "title should be present" do
+    @task.title = ""
     assert_not @task.valid?
+  end
+
+  test "description should be present" do
+    @task.description = nil
+    assert_not @task.valid?
+  end
+
+  test "status should be present" do
+    @task.status = nil
+    assert_not @task.valid?
+  end
+
+  test "due_date should be present" do
+    @task.due_date = nil
+    assert_not @task.valid?
+  end
+
+  test "created_by should be present" do
+    @task.created_by = nil
+    assert_not @task.valid?
+  end
+
+  test "assigned_to should be optional" do
+    @task.assigned_to = nil
+    assert @task.valid?
+  end
+
+  test "assigned_by should be optional" do
+    @task.assigned_by = nil
+    assert @task.valid?
   end
 
   test "should belong to assigned_to" do
@@ -27,15 +64,9 @@ class TaskTest < ActiveSupport::TestCase
     assert_respond_to @task, :created_by
   end
 
-  test "should validate presence of assigned_to if due_date is present" do
-    @task.due_date = Date.today
-    @task.assigned_to = nil
-    assert_not @task.valid?
-  end
-
   test "task should not be overdue if due date is in the future" do
     task = Task.create!(
-      name: "Future Task",
+      title: "Future Task",
       description: "This task is in the future",
       due_date: Date.tomorrow,
       status: "open",
@@ -48,7 +79,7 @@ class TaskTest < ActiveSupport::TestCase
 
   test "task should not allow due date in the past on creation" do
     task = Task.new(
-      name: "Invalid Task",
+      title: "Invalid Task",
       description: "This task has an invalid due date",
       due_date: Date.yesterday,
       status: "open",
@@ -62,7 +93,7 @@ class TaskTest < ActiveSupport::TestCase
 
   test "task should not allow due date in the past on update" do
     task = Task.create!(
-      name: "Valid Task",
+      title: "Valid Task",
       description: "This task has a valid due date",
       due_date: Date.tomorrow,
       status: "open",

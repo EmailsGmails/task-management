@@ -30,7 +30,7 @@ class TasksTest < ActionDispatch::IntegrationTest
   test "should create task with all attributes" do
     assert_difference('Task.count') do
       post tasks_url, params: { task: {
-        name: "New Task",
+        title: "New Task",
         description: "Task description",
         due_date: "2025-06-21",
         status: "draft",
@@ -41,7 +41,7 @@ class TasksTest < ActionDispatch::IntegrationTest
     end
 
     task = Task.last
-    assert_equal "New Task", task.name
+    assert_equal "New Task", task.title
     assert_equal "Task description", task.description
     assert_equal "2025-06-21", task.due_date.to_s
     assert_equal "draft", task.status
@@ -62,19 +62,6 @@ class TasksTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should not create task without assigned user if due date is present" do
-    assert_no_difference('Task.count') do
-      post tasks_url, params: { task: {
-        name: "Invalid Task",
-        description: "Task description",
-        due_date: "2025-06-21",
-        status: "draft"
-      } }
-    end
-
-    assert_select "#error_explanation"
-  end
-
   test "should get index" do
     get tasks_url
     assert_response :success
@@ -87,7 +74,12 @@ class TasksTest < ActionDispatch::IntegrationTest
 
   test "should create task" do
     assert_difference('Task.count') do
-      post tasks_url, params: { task: { name: @task1.name, description: @task1.description } }
+      post tasks_url, params: { task: {
+        title: @task1.title,
+        description: @task1.description,
+        due_date: "2025-06-21",
+        status: "Draft",
+      } }
     end
 
     assert_redirected_to task_url(Task.last)
@@ -104,10 +96,10 @@ class TasksTest < ActionDispatch::IntegrationTest
   end
 
   test "should update task" do
-    patch task_url(@task1), params: { task: { name: "Updated Name" } }
+    patch task_url(@task1), params: { task: { title: "Updated title" } }
     assert_redirected_to task_url(@task1)
     @task1.reload
-    assert_equal "Updated Name", @task1.name
+    assert_equal "Updated title", @task1.title
   end
 
   test "should destroy task" do
@@ -127,12 +119,12 @@ class TasksTest < ActionDispatch::IntegrationTest
   test "should sort tasks by due date" do
     get tasks_url, params: { sort: 'due_date' }
     assert_response :success
-    assert_select 'tbody tr:first-child td', text: @task2.name
+    assert_select 'tbody tr:first-child td', text: @task2.title
   end
 
   test "should sort tasks by status" do
     get tasks_url, params: { sort: 'status' }
     assert_response :success
-    assert_select 'tbody tr:first-child td', text: @task1.name
+    assert_select 'tbody tr:first-child td', text: @task1.title
   end
 end

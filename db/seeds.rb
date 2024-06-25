@@ -33,7 +33,7 @@ user3 = User.create!(
 
 # Create Tasks
 Task.create!(
-  name: "Task 1",
+  title: "Task 1",
   description: "Description for task 1",
   due_date: Date.today + 5,
   status: "Draft",
@@ -43,7 +43,7 @@ Task.create!(
 )
 
 Task.create!(
-  name: "Task 2",
+  title: "Task 2",
   description: "Description for task 2",
   due_date: Date.today + 10,
   status: "Open",
@@ -53,7 +53,7 @@ Task.create!(
 )
 
 Task.create!(
-  name: "Task 3",
+  title: "Task 3",
   description: "Description for task 3",
   due_date: Date.today + 15,
   status: "Pending",
@@ -63,7 +63,7 @@ Task.create!(
 )
 
 Task.create!(
-  name: "Task 4",
+  title: "Task 4",
   description: "Description for task 4",
   due_date: Date.today + 20,
   status: "In Progress",
@@ -73,7 +73,7 @@ Task.create!(
 )
 
 Task.create!(
-  name: "Task 5",
+  title: "Task 5",
   description: "Description for task 5",
   due_date: Date.today + 25,
   status: "Completed",
