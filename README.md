@@ -85,5 +85,5 @@ The application follows the Model-View-Controller (MVC) architecture provided by
 - Database Management: PostgreSQL is employed as the database system due to its robust features, performance, and compatibility with Rails.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
 
